@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FIRSTPAGE</title>
+  <link href="style2.css" rel="stylesheet" type="text/css" />
+  <link href = "https://fonts.googleapis.com/css?family=Rozha+One" rel = "stylesheet"/>
+  <script type = "text/javascript" src ="jquery-3.6.3.js"></script>
+</head>
+<body>
+
+
+<div class = "header">
+  <nav>
+    <ul>
+      <li><a href ="index.html">Start</a></li>
+      <li><a href = "read.html">Reading</a></li>
+    </ul>
+  </nav>
+
+</div>
+
+
+<div class = "contain">
+  <div class = "animation-text">
+    <h3 class = "animateMe" data-in-effect = "bounceIn" data_in_delay = "100" >      Why not start reading today?</h3>
+    <h1 class = "animateMe" data-in-effect = "bounceIn" data-in-delay = "50">           Upload your PDF Book</h1>
+  </div>
+
+
+    <video class = "video" autoplay loop muted>
+      <source src = "images/video.mp4" type = "video/mp4">
+    </video>
+
+
+</div>
+
+<div class = "contain2">
+
+  <form>
+    <input type="file" id="pdf_file" accept="application/pdf">
+    <input type="button" value="Upload" onclick="uploadFile()">
+  </form>
+
+  <iframe class = "frame" id = "pdf_viewer" ></iframe>
+
+  <input onclick="readFile()" type="button" value="Play" >
+
+
+
+</div>
+
+
+<script src="jquery-3.6.3.js"></script>
+<script src = "textillate.js"></script>
+<script src = "jquery.lettering.js"></script>
+<script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+
+
+
+
+<script>
+
+    $(".animateMe").textillate();
+
+    function uploadFile() {
+  var pdfFile = document.getElementById("pdf_file").files[0];
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var pdfUrl = URL.createObjectURL(pdfFile);
+    displayPdf(pdfUrl);
+  }
+  reader.readAsArrayBuffer(pdfFile);
+}
+
+function displayPdf(pdfUrl) {
+  var pdfViewer = document.getElementById("pdf_viewer");
+  pdfViewer.src = pdfUrl;
+}
+
+
+function readFile() {
+
+  var pdfFile = document.getElementById("pdf_file").files[0];
+
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var pdfUrl = URL.createObjectURL(pdfFile);
+
+     const axios = require('axios')
+   const pdfParse = require('pdf-parse')
+
+axios({
+    method: 'get',
+    url: pdfUrl,
+    responseType: 'arraybuffer'
+}).then(response => {
+    pdfParse(response.data).then(function(data) {
+        var pdfText = data.text;
+    });
+});
+
+
+    responsiveVoice.speak(pdfText);}
+
+   reader.readAsArrayBuffer(pdfFile);
+
+  }
+
+
+
+
+</script>
+
+
+
+
+</body>
+</html>
