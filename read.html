@@ -23,58 +23,77 @@
 
 <div class = "contain">
   <div class = "animation-text">
-    <h3 class = "animateMe" data-in-effect = "bounceIn" data_in_delay = "100" >      Why not start reading today?</h3>
-    <h1 class = "animateMe" data-in-effect = "bounceIn" data-in-delay = "50">           Upload your PDF Book</h1>
+    <h3 class = "animateMe" data-in-effect = "bounceIn" data_in_delay = "100" > Why not start reading today?</h3>
+    <h1 class = "animateMe" data-in-effect = "bounceIn" data-in-delay = "50"> Upload your PDF Book</h1>
   </div>
-
 
     <video class = "video" autoplay loop muted>
       <source src = "images/video.mp4" type = "video/mp4">
     </video>
 
-
 </div>
+
+<canvas id = "bg"></canvas>
 
 <div class = "contain2">
 
   <form>
     <input type="file" id="pdf_file" accept="application/pdf">
-    <input type="button" value="Upload" onclick="uploadFile()">
+    <input type="button" value="Upload" onclick="uploadPDF()">
+
+    <input type="number" id ="num" maxlenght = "7" placeholder = "Page # to Read Outloud" value ="">
+
   </form>
 
   <iframe class = "frame" id = "pdf_viewer" ></iframe>
 
-  <input onclick="readFile()" type="button" value="Play" >
+  <input onclick="readFile()" type="button" value="Play to Start Reading" >
+
+  <input onclick = "Stopfile()" type = "button" value = "Stop">
 
 
 
 </div>
 
 
+<!-- IMPORTING NECESSARY ONLINE LIBRARIES INSTALLING THE REST THROUGH NPM FOR PDFJS-->
 <script src="jquery-3.6.3.js"></script>
 <script src = "textillate.js"></script>
+
 <script src = "jquery.lettering.js"></script>
 <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+<script src="https://code.responsivevoice.org/responsivevoice.js?key=Hf69MRDp"></script>
+<script src="https://mozilla.github.io/pdf.js/build/pdf.js">
+
+<script>
 
 
+</script>
 
 
 <script>
 
     $(".animateMe").textillate();
 
-    function uploadFile() {
+
+function uploadPDF() {
+
+  //Stopping reading previous file when a new one is uploaded
+  Stopfile();
+
+  //Getting file from its html id
   var pdfFile = document.getElementById("pdf_file").files[0];
 
   var reader = new FileReader();
   reader.onload = function(e) {
     var pdfUrl = URL.createObjectURL(pdfFile);
-    displayPdf(pdfUrl);
+    createPdf(pdfUrl);
+
   }
   reader.readAsArrayBuffer(pdfFile);
 }
 
-function displayPdf(pdfUrl) {
+function createPdf(pdfUrl) {
   var pdfViewer = document.getElementById("pdf_viewer");
   pdfViewer.src = pdfUrl;
 }
@@ -88,30 +107,44 @@ function readFile() {
   reader.onload = function(e) {
     var pdfUrl = URL.createObjectURL(pdfFile);
 
-     const axios = require('axios')
-   const pdfParse = require('pdf-parse')
+    pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
+        // Get the selected page
 
-axios({
-    method: 'get',
-    url: pdfUrl,
-    responseType: 'arraybuffer'
-}).then(response => {
-    pdfParse(response.data).then(function(data) {
-        var pdfText = data.text;
+        var page = document.getElementById("num").value;
+        console.log(num.value);
+        var TextPage = parseInt(num.value);
+        var Value = TextPage;
+
+        pdf.getPage(Value).then(function(page) {
+            // Extracting Content
+            var textContent = page.getTextContent();
+            textContent.then(function(text){
+                var pdfText = text.items.map(function (s) { return s.str; }).join('');
+
+                var Text = pdfText;
+                console.log(Text) // Testing purposes
+                responsiveVoice.speak(Text);
+            });
+        });
     });
-});
 
-
-    responsiveVoice.speak(pdfText);}
+    }
 
    reader.readAsArrayBuffer(pdfFile);
 
   }
 
+function Stopfile (){
 
+  responsiveVoice.cancel()
+
+
+
+}
 
 
 </script>
+
 
 
 

@@ -1,7 +1,7 @@
 /* Further Work in 1st Page */
 body {
-    background-image: url(images/paper.jpg);
     -webkit-backface-visibility: hidden;
+    background-color: rgba(37,83,47, 0.4);
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -96,7 +96,6 @@ h3{
     margin-left:50%;
     margin-top: 20%;
 
-
 }
 
 .frame{
@@ -152,38 +151,38 @@ width: 500px;
 @media screen and (min-width: 800px){
 
     .contain {
-        width: 80%;
+        width: 90%;
         height: 700px;
 
     }
 
-       .contain2{
+    .contain2{
            position:absolute;
            margin-left:50%;
            margin-top: 25%;
 
-       }
+    }
 
-       .frame{
+    .frame{
        width: 90%;
-       }
+    }
 
 
-       h1{
+    h1{
         width: 450px;
         margin-left: 15%;
     }
-        h3{
+    h3{
         color:white;
         width: 300px;
         background: linear-gradient(90deg, #889268, #98e19d);
         margin-left: 28%;
     }
-      .video{
+    .video{
         width:30%;
         left: 1%;
         padding: 5%;
-      }
+    }
 
 }
 
@@ -192,34 +191,34 @@ width: 500px;
 @media screen and (min-width: 1000px){
 
     .contain {
-        width: 80%;
-        height: 700px;
+        width: 90%;
+        height: 800px;
 
     }
 
-       .contain2{
+    .contain2{
            position:absolute;
            margin-left:50%;
            margin-top: 20%;
 
-       }
+    }
 
-       .frame{
+    .frame{
        width: 130%;
        }
 
 
-       h1{
+     h1{
         width: 450px;
         margin-left: 30%;
     }
-        h3{
+    h3{
         color:white;
         width: 300px;
         background: linear-gradient(90deg, #889268, #98e19d);
         margin-left: 40%;
     }
-      .video{
+    .video{
         width:30%;
         left: 1%;
         padding: 5%;
@@ -230,38 +229,47 @@ width: 500px;
 @media screen and (min-width: 1500px){
 
     .contain {
-        width: 80%;
+        width: 90%;
         height: 800px;
-
 
     }
 
-       .contain2{
+     .contain2{
            position:absolute;
            margin-left:50%;
-           margin-top: 20%;
+           margin-top: 15%;
 
-       }
+     }
 
-       .frame{
-       width: 130%;
-       }
+     .frame{
+       width:130%;
 
+     }
 
-       h1{
-        width: 450px;
+     h1{
+        width: 350px;
         margin-left: 35%;
     }
         h3{
         color:white;
-        width: 300px;
+        width: 250px;
         background: linear-gradient(90deg, #889268, #98e19d);
         margin-left: 40%;
     }
-      .video{
+    .video{
         width:30%;
         left: 1%;
         padding: 5%;
-      }
+    }
 
 }
+
+
+
+canvas{
+position: absolute;
+
+
+
+}
+
